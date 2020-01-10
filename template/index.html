@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style>
+      .container-parent {
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        height: 100vh;
+      }
+      .container-pane {
+          width: 25vw;
+          background-color: white;
+          height: auto;
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-bottom: 100px;
+          position: absolute;
+          z-index: 9999999;
+          top: 0;
+          box-shadow: 4px 0px 34px silver;
+      }
+      .container-pane-top {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: right;
+      }
+      .container-content {
+          width: 85%;
+      }
+
+      .card-side {
+        box-shadow: 0 !important;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 10px;
+        background-color: white;
+        border-radius: 8px;
+        border: 1px solid #A2A2A2;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+      }
+      .card-side > div.number {
+        background-color: teal;
+        color: white;
+        border-radius: 50px;
+        min-width: 50px;
+        max-width: 50px;
+        min-height: 50px;
+        max-height: 50px;
+        align-items: center;
+        display: inline-flex;
+        margin-right: 10px;
+      }
+      .card-side > div.number > p {
+        text-align: center;
+        width: 100%;
+      }
+      </style>
+    </head>
+
+    <body class="grey lighten-3">
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper white">
+                  <a href="#!" class="grey-text text-darken-3" style="margin-left: 2%; font-size: 18pt; display: flex; align-items: center;">
+                    <i class="material-icons" style="margin-right: 20px">menu</i> Build an offline-first, data-driven PWA
+                  </a>
+                </div>
+              </nav>
+        </div>
+
+        <div class="container-pane grey lighten-4">
+          <div class="container-pane-top">
+            <i class="material-icons">close</i>
+          </div>
+
+          <div class="card-side">
+            <div class="number"><p>1</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number" style="width: 100%;"><p>2</p></div> 
+            <p  style="width: 100%;">
+              The quick brown fox jumps over the lazy dog.
+            </p>
+          </div>
+          <div class="card-side">
+            <div class="number"><p>3</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number"><p>4</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number"><p>5</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number"><p>6</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number"><p>7</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number"><p>8</p></div> Overview
+          </div>
+          <div class="card-side">
+            <div class="number"><p>9</p></div> Overview
+          </div>
+
+        </div>
+
+        <div class="container-parent">
+            <div class="container-content">
+    b
+            </div>
+        </div>
+    </body>
+</html>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
