@@ -1,2 +1,0 @@
-# codelabs
-PWA Pilipinas Codelabs
