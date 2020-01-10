@@ -1,0 +1,85 @@
+<!--
+    PWA Pilipinas
+    2020
+ -->
+ <!Doctype html>
+ <html lang="en">
+ <head>
+     <!-- Title of the Page -->
+     <title>PWA Pilipinas Codelabs</title>
+     <!-- Meta tags -->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ 
+     <!-- above the fold styles -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <link rel="stylesheet" href="/assets/style.css">
+ 
+     <!-- above the fold scripts -->
+     <script src="/directory.js"></script>
+ 
+ </head>
+ <body>
+ 
+     <!-- This is the navbar -->
+     <div class="navbar-fixed">
+         <nav class="z-depth-0" style="border-bottom: 1px solid silver;">
+             <div class="nav-wrapper white">
+                 <a href="javascript:void(0)" id="menuButton" class="grey-text text-darken-3" title="PWA Pilipinas Codelabs">
+                    <img src="/assets/logo.svg" width="80px"> <b>Codelabs</b>
+                 </a>
+             </div>
+         </nav>
+     </div>
+     <div class="progress" style="margin-top:0;">
+         <div class="indeterminate"></div>
+     </div>
+     <!-- .This is the navbar -->
+ 
+     <!-- This is the menu -->
+     <div class="menu grey lighten-4">
+         <div class="menu-top">
+             <a href="javascript:void(0)" id="closeMenuButton"><i class="material-icons grey-text text-darken-3">close</i></a>
+         </div>
+         <div class="menuContainer"></div>
+     </div>
+     <!-- .This is the menu -->
+ 
+     <div class="container">
+        <div class="cardContainer" style="display: flex; align-items: center; width:100%; flex-wrap:wrap;"></div>
+     </div>
+ 
+ </body>
+ </html>
+ <!-- below the fold styles -->
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ 
+ <!-- below the fold scripts -->
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(()=>{
+        data.codelabs.forEach(obj => {
+            var tpl = `
+                <div class="card resize hoverable" style="cursor: pointer;" onclick="window.location.replace('/?id=${obj.id}');">
+                    <div class="card-img">
+                        <img src="/assets/placeholder-image.svg" width="100%">
+                    </div>
+                    <div class="card-content">
+                        <h1 class="card-title">${obj.title}</h1>
+                        <p>
+                            <i class="material-icons tiny">access_time</i> ${obj.estimated_time}<br>
+                            <i class="material-icons tiny">sentiment_satisfied</i> ${obj.level}<br>
+                            <i class="material-icons tiny">textsms</i> ${obj.language}
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        <a href="javascript:void(0)" class="black-text">Start</a>
+                    </div>
+                </div>
+            `;
+            $(".cardContainer").append(tpl);
+        });
+
+        $(".progress").hide();
+    });
+</script>

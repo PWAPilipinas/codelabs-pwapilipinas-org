@@ -1,0 +1,36 @@
+<h2 is-upgraded><strong>Get a key for the Dark Sky API</strong></h2>
+<p>Our weather data comes from the <a href="https://darksky.net/dev" target="_blank">Dark Sky API</a>. In order to use it, you&#39;ll need to request an API key. It&#39;s easy to use, and free for non-commercial projects.</p>
+<p><a href="https://darksky.net/dev/register" target="_blank"><paper-button class="colored" raised>Register for API Key</paper-button></a></p>
+<aside class="special"><p><strong>Note:</strong> You can still complete this codelab without a Dark Sky API key. If our server is unable to get real data from the Dark Sky API, it will return fake data instead.</p>
+</aside>
+<h3 is-upgraded><strong>Verify your API key is working properly</strong></h3>
+<p>To test that your API Key is working properly, make an HTTP request to the DarkSky API. Update the URL below to replace <code>DARKSKY_API_KEY</code> with your API key. If everything works, you should see the latest weather forecast for New York City.</p>
+<p><code>https://api.darksky.net/forecast/DARKSKY_API_KEY/40.7720232,-73.9732319</code></p>
+<aside class="warning"><p><strong>Caution:</strong> Protect your API Keys like you protect your passwords. You should <strong>never</strong> check your API Key into a source repository, post it online, or share it. If your API Key is used improperly, it may result in it being revoked, or more. </p>
+</aside>
+<h2 is-upgraded><strong>Get the code</strong></h2>
+<p>We&#39;ve put everything you need for this project into a Git repo. To get started, you&#39;ll need to grab the code and open it in your favorite dev environment. For this codelab, we recommend using Glitch.</p>
+<h3 is-upgraded><strong>Strongly Recommended: Use Glitch to import the repo</strong></h3>
+<p>Using Glitch is the recommended method for working through this codelab.</p>
+<ol type="1" start="1">
+<li>Open a new browser tab and go to <a href="https://glitch.com" target="_blank">https://glitch.com</a>.</li>
+<li>If you don&#39;t have an account, you&#39;ll need to sign up.</li>
+<li>Click <strong>New Project</strong>, then <strong>Clone from Git Repo.</strong></li>
+<li>Clone <strong>https://github.com/googlecodelabs/your-first-pwapp.git</strong> and click OK.</li>
+<li>Once the repo has loaded, edit the <code>.env</code> file, and update it with your DarkSky API key.</li>
+<li>Click the <strong>Show</strong> button, then choose <strong>In a New Window</strong> to see the PWA in action.</li>
+</ol>
+<aside class="warning"><p><strong>Warning:</strong> There have been several reports of problems when cloning this repo in Glitch. See <a href="https://github.com/googlecodelabs/your-first-pwapp/issues/187" target="_blank">Issues cloning repo on glitch.com</a> for the latest status and suggested workarounds.</p>
+</aside>
+<h3 is-upgraded><strong>Alternative: Download code &amp; work locally</strong></h3>
+<p>If you want to download the code and work locally, you&#39;ll need to have a recent version of <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a> and a code editor setup and ready to go. </p>
+<aside class="warning"><p><strong>Caution:</strong> If you work locally, some of the Lighthouse audits won&#39;t pass, and installation may not be available because the local server doesn&#39;t serve the content over a secure context.</p>
+</aside>
+<p><a href="https://github.com/googlecodelabs/your-first-pwapp/archive/master.zip" target="_blank"><paper-button class="colored" raised><iron-icon icon="file-download"></iron-icon>Download source code</paper-button></a></p>
+<ol type="1" start="1">
+<li>Unpack the downloaded zip file.</li>
+<li>Run <code>npm install</code> to install the dependencies required to run the server.</li>
+<li>Edit <code>server.js</code> and set your DarkSky API key.</li>
+<li>Run <code>node server.js</code> to start the server on port 8000.</li>
+<li>Open a browser tab to <a href="http://localhost:8000" target="_blank">http://localhost:8000</a>  </li>
+</ol>

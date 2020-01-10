@@ -1,0 +1,65 @@
+<!--
+    PWA Pilipinas
+    2020
+ -->
+<!Doctype html>
+<html lang="en">
+<head>
+    <!-- Title of the Page -->
+    <title>PWA Pilipinas Codelabs</title>
+    <!-- Meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- above the fold styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/assets/style.css">
+
+    <!-- above the fold scripts -->
+    <script src="/directory.js"></script>
+
+</head>
+<body>
+
+    <!-- This is the navbar -->
+    <div class="navbar-fixed">
+        <nav class="z-depth-0" style="border-bottom: 1px solid silver;">
+            <div class="nav-wrapper white">
+                <a href="javascript:void(0)" id="menuButton" class="grey-text text-darken-3">
+                    <i class="material-icons" style="margin-right: 20px">menu</i> <span id="codelabsTitle"></span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <div class="progress" style="margin-top:0;">
+        <div class="indeterminate"></div>
+    </div>
+    <!-- .This is the navbar -->
+
+    <!-- This is the menu -->
+    <div class="menu">
+        <div class="menu-top">
+            <a href="javascript:void(0)" title="See Codelabs List" style="float: left; display: flex; align-items: center;" onclick="window.location.replace('/list')"><i class="material-icons grey-text text-darken-3" style="margin-right: 10px;">list</i> <p class='black-text'>See Codelabs List<p></p></a>
+            <a href="javascript:void(0)" title="Close Menu" id="closeMenuButton"><i class="material-icons grey-text text-darken-3">close</i></a>
+        </div>
+        <div class="menuContainer" style="margin-top: 50px;"></div>
+    </div>
+    <!-- .This is the menu -->
+
+    <div class="container">
+        <div class="card sectionCard" style="display:none;">
+            <div class="card-content" id="sectionContent">                
+            </div>
+        </div>
+        <div class="navigation" style="width:100%;">
+        </div>
+    </div>
+
+</body>
+</html>
+<!-- below the fold styles -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- below the fold scripts -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/assets/script.js"></script>

@@ -1,0 +1,32 @@
+<h2 is-upgraded><strong>What makes a web app, a Progressive Web App?</strong></h2>
+<p>Progressive Web Apps provide an installable, app-like experience on desktop and mobile that are built and delivered directly via the web. They&#39;re web apps that are fast and reliable. And most importantly, they&#39;re web apps that work in any browser. If you&#39;re building a web app today, you&#39;re already on the path towards building a Progressive Web App.</p>
+<h3 is-upgraded><strong>Fast &amp; Reliable</strong></h3>
+<p>Every web experience must be fast, and this is especially true for Progressive Web Apps. Fast refers to the time it takes to get meaningful content on screen and to provide an interactive experience.</p>
+<p>And, it must be <strong>reliably fast</strong>. It&#39;s hard to stress enough how much better reliable performance is. Think of it this way: the first load of a native app is frustrating. It&#39;s gated by an app store and a huge download, but once you get to a point where the app is installed, that up-front cost is amortized across all app starts, and none of those starts have a variable delay. Each application start is as fast as the last, no variance. A Progressive Web App must deliver this reliable performance that users have come to expect from any installed experience.</p>
+<h3 is-upgraded><strong>Installable</strong></h3>
+<p>Progressive Web Apps can run in a browser tab, but are also installable. Bookmarking a site just adds a shortcut, but an installed Progressive Web App (PWA) looks and behaves like all of the other installed apps. It launches from the same place as other apps launch. You can control the launch experience, including a customized splash screen, icons, and more. It runs as an app, in an app window without an address bar or other browser UI. Like all other installed apps, it&#39;s a top level app in the task switcher.</p>
+<p>Remember, it&#39;s critical that an installable PWA is fast and reliable. Users who install a PWA expect that their apps work, no matter what kind of network connection they&#39;re on. It&#39;s a baseline expectation that must be met by every installed app.</p>
+<h3 is-upgraded><strong>Mobile &amp; Desktop</strong></h3>
+<p>Using responsive design techniques, PWAs work on both mobile <strong>and</strong> desktop, using a single code base between platforms. If you&#39;re considering writing a native app, take a look at the benefits that a PWA offers.</p>
+<h2 is-upgraded><strong>What you&#39;ll build</strong></h2>
+<p>In this codelab, you&#39;re going to build a weather web app using PWA techniques. Your app will:</p>
+<ul>
+<li>Use responsive design, so it works on desktop or mobile.</li>
+<li>Be fast, using a service worker to precache the app resources (HTML, CSS, JavaScript, images) needed to run and to cache the weather data at runtime to improve performance.</li>
+<li>Be installable, using a web app manifest and the <code>beforeinstallprompt</code> event to notify the user it&#39;s installable.</li>
+</ul>
+<aside class="warning"><p><strong>Note:</strong> To simplify this codelab, and explain the fundamentals of providing an offline experience, we&#39;re using vanilla JavaScript. In a production app, we strongly recommend using tools like <a href="https://developers.google.com/web/tools/workbox/" target="_blank">Workbox</a> to build your service worker. It removes many of the sharp edges and dark corners you may run into.</p>
+</aside>
+<h2 class="checklist" is-upgraded><strong>What you&#39;ll learn</strong></h2>
+<ul class="checklist">
+<li>How to create and add a web app manifest</li>
+<li>How to provide a simple offline experience</li>
+<li>How to provide a full offline experience</li>
+<li>How to make your app installable</li>
+</ul>
+<p>This codelab is focused on Progressive Web Apps. Non-relevant concepts and code blocks are glossed over and are provided for you to simply copy and paste.</p>
+<h2 is-upgraded><strong>What you&#39;ll need</strong></h2>
+<ul>
+<li>A recent version of Chrome (74 or later). PWAs work in all browsers, but we&#39;ll be using a few features of the Chrome DevTools to better understand what&#39;s happening at the browser level, and use it to test the install experience.</li>
+<li>Knowledge of HTML, CSS, JavaScript, and <a href="https://developer.chrome.com/devtools" target="_blank">Chrome DevTools</a>.</li>
+</ul>

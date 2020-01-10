@@ -1,0 +1,162 @@
+<p>Take a moment and put your phone into airplane mode, and try running some of your favorite apps. In almost all cases, they provide a fairly robust offline experience. Users expect that robust experience from their apps. And the web should be no different. Progressive Web Apps should be designed with offline as a core scenario.</p>
+<aside class="special"><p>Designing for offline-first can drastically improve the performance of your web app by reducing the number of network requests made by your app. Instead resources can be precached and served directly from the local cache. Even with the fastest network connection, serving from the local cache will be faster!</p>
+</aside>
+<h2 is-upgraded><strong>Service worker life cycle</strong></h2>
+<p>The life cycle of the service worker is the most complicated part. If you don&#39;t know what it&#39;s trying to do and what the benefits are, it can feel like it&#39;s fighting you. But once you know how it works, you can deliver seamless, unobtrusive updates to users, mixing the best of the web and native patterns.</p>
+<aside class="special"><p><strong>Dive Deeper:</strong> This codelab only covers the very basics of the service worker life cycle. To dive deeper, refer to <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle" target="_blank">The Service Worker Lifecycle</a> article on WebFundamentals.</p>
+</aside>
+<h3 is-upgraded><code>install</code><strong> event</strong></h3>
+<p>The first event a service worker gets is <code>install</code>. It&#39;s triggered as soon as the worker executes, and it&#39;s only called once per service worker. <strong>If you alter your service worker script the browser considers it a different service worker</strong>, and it&#39;ll get its own <code>install</code> event. </p>
+<p class="image-container"></p>
+<p>Typically the <code>install</code> event is used to cache everything you need for your app to run. </p>
+<h3 is-upgraded><code>activate</code><strong> event</strong></h3>
+<p>The service worker will receive an <code>activate</code> event every time it starts up. The main purpose of the <code>activate</code> event is to configure the service worker&#39;s behavior, clean up any resources left behind from previous runs (e.g. old caches), and get the service worker ready to handle network requests (for example the <code>fetch</code> event described below).</p>
+<h3 is-upgraded><code>fetch</code><strong> event</strong></h3>
+<p>The fetch event allows the service worker to intercept any network requests and handle requests. It can go to the network to get the resource, it can pull it from its own cache, generate a custom response, or any number of different options. Check out the <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/" target="_blank">Offline Cookbook</a> for different strategies that you can use.</p>
+<h3 is-upgraded><strong>Updating a service worker</strong></h3>
+<p>The browser checks to see if there is a new version of your service worker on each page load. If it finds a new version, the new version is downloaded and installed in the background, but it is not activated. The new version of your service worker sits in a waiting state, until there are no longer any pages open that use the old service worker. Once all windows using the old service worker are closed, the new service worker is activated and can take control. Refer to the <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#updates" target="_blank">Updating the service worker</a> section of the Service Worker Lifecycle doc for further details.</p>
+<h2 is-upgraded><strong>Choosing the right caching strategy</strong></h2>
+<p>Choosing the right <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/" target="_blank">caching strategy</a> depends on the type of resource you&#39;re trying to cache and how you might need to access it later. For our weather app, we&#39;ll split the resources we need to cache into two categories: resources we want to precache and the data that we&#39;ll cache at runtime.</p>
+<h3 is-upgraded><strong>Caching static resources</strong></h3>
+<p>Precaching your resources is a similar concept to what happens when a user installs a desktop or mobile app. The key resources needed for the app to run are installed or cached on the device so that they can be loaded later whether there&#39;s a network connection or not.</p>
+<p>For our app, we&#39;ll precache all of our static resources when our service worker is installed so that everything we need to run our app is stored on the user&#39;s device. To ensure our app loads lightning fast, we&#39;ll use the <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network" target="_blank">cache-first</a> strategy; instead of going to the network to get the resources, they&#39;re pulled from the local cache; only if it&#39;s not available there will we try to get it from the network.</p>
+<p class="image-container"></p>
+<p>Pulling from the local cache eliminates any network variability. No matter what kind of network the user is on (WiFi, 5G, 3G, or even 2G), the key resources we need to run are available almost immediately.</p>
+<aside class="warning"><p><strong>Caution:</strong> In this sample, static resources are served using a <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network" target="_blank"><code>cache-first</code></a> strategy, which results in a copy of any cached content being returned without consulting the network. While a <code>cache-first</code> strategy is easy to implement, it can cause challenges in the future.</p>
+</aside>
+<h3 is-upgraded><strong>Caching the app data</strong></h3>
+<p>The <a href="https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#stale-while-revalidate" target="_blank">stale-while-revalidate</a> strategy is ideal for certain types of data and works well for our app. It gets data on screen as quickly as possible, then updates once the network has returned the latest data. Stale-while-revalidate means we need to kick off two asynchronous requests, one to the cache and one to the network. </p>
+<p class="image-container"></p>
+<p>Under normal circumstances, the cached data will be returned almost immediately providing the app with recent data it can use. Then, when the network request returns, the app will be updated using the latest data from the network.</p>
+<p>For our app, this provides a better experience than the network, falling back to cache strategy because the user does not have to wait until the network request times out to see something on screen. They may initially see older data, but once the network request returns, the app is updated with the latest data.</p>
+<h2 is-upgraded><strong>Update app logic</strong></h2>
+<p>As mentioned previously, the app needs to kick off two asynchronous requests, one to the cache and one to the network. The app uses the <code>caches</code> object available in <code>window</code> to access the cache and retrieve the latest data. This is an excellent example of progressive enhancement as the <code>caches</code> object may not be available in all browsers, and if it&#39;s not, the network request should still work.</p>
+<p>Update the <code>getForecastFromCache()</code> function, to check if the <code>caches</code> object is available in the global <code>window</code> object, and if it is, request the data from the cache.</p>
+<h3 is-upgraded><a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/scripts/app.js#L164" target="_blank">public/scripts/app.js</a></h3>
+<pre><code>// CODELAB: Add code to get weather forecast from the caches object.
+if (!(&#39;caches&#39; in window)) {
+  return null;
+}
+const url = `${window.location.origin}/forecast/${coords}`;
+return caches.match(url)
+    .then((response) =&gt; {
+      if (response) {
+        return response.json();
+      }
+      return null;
+    })
+    .catch((err) =&gt; {
+      console.error(&#39;Error getting data from cache&#39;, err);
+      return null;
+    });</code></pre>
+<p>Then, we need to modify <a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/scripts/app.js#L196" target="_blank"><code>updateData()</code></a> so that it makes two calls, one to <code>getForecastFromNetwork()</code> to get the forecast from the network, and one to <code>getForecastFromCache()</code> to get the latest cached forecast:</p>
+<h3 is-upgraded><a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/scripts/app.js#L200" target="_blank">public/scripts/app.js</a></h3>
+<pre><code>// CODELAB: Add code to call getForecastFromCache.
+getForecastFromCache(location.geo)
+    .then((forecast) =&gt; {
+      renderForecast(card, forecast);
+    });</code></pre>
+<p>Our weather app now makes two asynchronous requests for data, one from the cache and one via a <code>fetch</code>. If there&#39;s data in the cache, it&#39;ll be returned and rendered extremely quickly (tens of milliseconds). Then, when the <code>fetch</code> responds, the card will be updated with the freshest data directly from the weather API.</p>
+<p>Notice how the cache request and the <code>fetch</code> request both end with a call to update the forecast card. How does the app know whether it&#39;s displaying the latest data? This is handled in the following code from <code>renderForecast()</code>:</p>
+<h3 is-upgraded><a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/scripts/app.js#L85" target="_blank">public/scripts/app.js</a></h3>
+<pre><code>// If the data on the element is newer, skip the update.
+if (lastUpdated &gt;= data.currently.time) {
+  return;
+}</code></pre>
+<p>Every time that a card is updated, the app stores the timestamp of the data on a hidden attribute on the card. The app just bails if the timestamp that already exists on the card is newer than the data that was passed to the function.</p>
+<h2 is-upgraded><strong>Pre-cache our app resources</strong></h2>
+<p>In the service worker, let&#39;s add a <code>DATA_CACHE_NAME</code> so that we can separate our application&#39;s data from the app shell. When the app shell is updated and older caches are purged, our data remains untouched, ready for a super-fast load. Keep in mind, if your data format changes in the future, you&#39;ll need a way to handle that and ensure the app shell and content stay in sync.</p>
+<h3 is-upgraded><a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/service-worker.js#L21" target="_blank">public/service-worker.js</a></h3>
+<pre><code>// CODELAB: Update cache names any time any of the cached files change.
+const CACHE_NAME = &#39;static-cache-v2&#39;;
+const DATA_CACHE_NAME = &#39;data-cache-v1&#39;;</code></pre>
+<p>Don&#39;t forget to also update the <code>CACHE_NAME</code>; we&#39;ll be changing all of our static resources as well.</p>
+<p>In order for our app to work offline, we need to precache all of the resources it needs. This will also help our performance. Instead of having to get all of the resources from the network, the app will be able to load all of them from the local cache, eliminating any network instability.</p>
+<p>Update the <code>FILES_TO_CACHE</code> array with the list of files:</p>
+<h3 is-upgraded><a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/service-worker.js#L23" target="_blank">public/service-worker.js</a></h3>
+<pre><code>// CODELAB: Add list of files to cache here.
+const FILES_TO_CACHE = [
+  &#39;/&#39;,
+  &#39;/index.html&#39;,
+  &#39;/scripts/app.js&#39;,
+  &#39;/scripts/install.js&#39;,
+  &#39;/scripts/luxon-1.11.4.js&#39;,
+  &#39;/styles/inline.css&#39;,
+  &#39;/images/add.svg&#39;,
+  &#39;/images/clear-day.svg&#39;,
+  &#39;/images/clear-night.svg&#39;,
+  &#39;/images/cloudy.svg&#39;,
+  &#39;/images/fog.svg&#39;,
+  &#39;/images/hail.svg&#39;,
+  &#39;/images/install.svg&#39;,
+  &#39;/images/partly-cloudy-day.svg&#39;,
+  &#39;/images/partly-cloudy-night.svg&#39;,
+  &#39;/images/rain.svg&#39;,
+  &#39;/images/refresh.svg&#39;,
+  &#39;/images/sleet.svg&#39;,
+  &#39;/images/snow.svg&#39;,
+  &#39;/images/thunderstorm.svg&#39;,
+  &#39;/images/tornado.svg&#39;,
+  &#39;/images/wind.svg&#39;,
+];</code></pre>
+<p>Since we are manually generating the list of files to cache, every time we update a file we <strong>must update the </strong><strong><code>CACHE_NAME</code></strong>. We were able to remove <code>offline.html</code> from our list of cached files because our app now has all the necessary resources it needs to work offline, and won&#39;t ever show the offline page again.</p>
+<aside class="warning"><p><strong>Caution:</strong> In this sample, we hand-rolled our own service worker. Each time we update any of the static resources, we need to re-roll the service worker and update the cache, otherwise the old content will be served. In addition, when one file changes, the entire cache is invalidated and needs to be re-downloaded. That means fixing a simple single character spelling mistake will invalidate the cache and require everything to be downloaded again—not exactly efficient. <a href="https://developers.google.com/web/tools/workbox/" target="_blank">Workbox</a> handles this gracefully, by integrating it into your build process, only changed files will be updated, saving bandwidth for users and easier maintenance for you!</p>
+</aside>
+<h3 is-upgraded><strong>Update the activate event handler</strong></h3>
+<p>To ensure our <code>activate</code> event doesn&#39;t accidentally delete our data, in the <code>activate</code> event of <code>service-worker.js</code>, replace <code>if (key !== CACHE_NAME) {</code> with:</p>
+<h3 is-upgraded><strong>public/service-worker.js</strong></h3>
+<pre><code>if (key !== CACHE_NAME &amp;&amp; key !== DATA_CACHE_NAME) {</code></pre>
+<h3 is-upgraded><strong>Update the fetch event handler</strong></h3>
+<p>We need to modify the service worker to intercept requests to the weather API and store their responses in the cache, so we can easily access them later. In the stale-while-revalidate strategy, we expect the network response to be the ‘source of truth,&#39; always providing us with the most recent information. If the network can&#39;t, it&#39;s OK to fail because we&#39;ve already retrieved the latest cached data in our app.</p>
+<p>Update the <code>fetch</code> event handler to handle requests to the data API separately from other requests.</p>
+<h3 is-upgraded><a href="https://github.com/googlecodelabs/your-first-pwapp/blob/master/public/service-worker.js#L42" target="_blank">public/service-worker.js</a></h3>
+<pre><code>// CODELAB: Add fetch event handler here.
+if (evt.request.url.includes(&#39;/forecast/&#39;)) {
+  console.log(&#39;[Service Worker] Fetch (data)&#39;, evt.request.url);
+  evt.respondWith(
+      caches.open(DATA_CACHE_NAME).then((cache) =&gt; {
+        return fetch(evt.request)
+            .then((response) =&gt; {
+              // If the response was good, clone it and store it in the cache.
+              if (response.status === 200) {
+                cache.put(evt.request.url, response.clone());
+              }
+              return response;
+            }).catch((err) =&gt; {
+              // Network request failed, try to get it from the cache.
+              return cache.match(evt.request);
+            });
+      }));
+  return;
+}
+evt.respondWith(
+    caches.open(CACHE_NAME).then((cache) =&gt; {
+      return cache.match(evt.request)
+          .then((response) =&gt; {
+            return response || fetch(evt.request);
+          });
+    })
+);</code></pre>
+<p>The code intercepts the request and checks if it is for a weather forecast. If it is, use <code>fetch</code> to make the request. Once the response is returned, open the cache, clone the response, store it in the cache, and return the response to the original requestor.</p>
+<p>We need to remove the <code>evt.request.mode !== &#39;navigate&#39;</code> check because we want our service worker to handle all requests (including images, scripts, CSS files, etc), not just navigations. If we left that check in, only the HTML would be served from the service worker cache. Everything else would be requested from the network.</p>
+<h2 is-upgraded><strong>Try it out</strong></h2>
+<p>The app should be completely offline-functional now. Refresh the page to ensure that you&#39;ve got the latest service worker installed. Then save a couple of cities and press the refresh button on the app to get fresh weather data.  </p>
+<p>Next, go to the <strong>Cache Storage</strong> pane on the <strong>Application</strong> panel of DevTools. Expand the section and you should see the name of your static cache and data cache listed on the left-hand side. Opening the data cache should show the data stored for each city.</p>
+<p class="image-container"></p>
+<p>Switch to the <strong>Service Workers</strong> pane, and check the <strong>Offline</strong> checkbox. Try reloading the page and then go offline and reload the page. </p>
+<p>If you&#39;re on a fast network and want to see how weather forecast data is updated on a slow connection, set the <code>FORECAST_DELAY</code> property in <code>server.js</code> to <code>5000</code>. All requests to the forecast API will be delayed by 5000ms.</p>
+<h2 is-upgraded><strong>Verify changes with Lighthouse</strong></h2>
+<p>It&#39;s also a good idea to run Lighthouse again.</p>
+<p><strong>SEO Audit</strong></p>
+<ul>
+<li><strong>✅ PASSED:</strong> Document has a meta description. </li>
+</ul>
+<p><strong>Progressive Web App Audit</strong></p>
+<ul>
+<li><strong>✅ PASSED:</strong> Current page responds with a 200 when offline.</li>
+<li><strong>✅ PASSED: </strong><code>start_url</code> responds with a 200 when offline.</li>
+<li><strong>✅ PASSED:</strong> Registers a service worker that controls page and <code>start_url.</code></li>
+<li><strong>✅ PASSED:</strong> Web app manifest meets the installability requirements.</li>
+<li><strong>✅ PASSED:</strong> Configured for a custom splash screen.</li>
+<li><strong>✅ PASSED:</strong> Sets an address-bar theme color.</li>
+</ul>
