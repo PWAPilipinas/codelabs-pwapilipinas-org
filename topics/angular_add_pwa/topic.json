@@ -1,0 +1,32 @@
+{
+    "topic_code": "angular_add_pwa",
+    "category_id": "",
+    "title": "Level up your Angular project as a Progressive Web App!",
+    "author": {
+        "name": "Andresito de Guzman",
+        "avatar": ""
+    },
+    "repository": "",
+    "image": "",
+    "language": "English",
+    "estimated_time": "30 minutes",
+    "level": "Easy",
+    "date_updated": "April 4, 2020",
+    "sections": [
+        {
+            "id": "1",
+            "title": "Welcome!",
+            "filename": "introduction.html"
+        },
+        {
+            "id": "2",
+            "title": "Install Angular and Create a Starter Project",
+            "filename": "install_angular.html"
+        },
+        {
+            "id": "3",
+            "title": "Add Angular PWA",
+            "filename": "add_angular_pwa.html"
+        }
+    ]
+}
